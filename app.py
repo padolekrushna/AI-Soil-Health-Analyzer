@@ -54,7 +54,8 @@ def user_input_features():
         'GPS_Longitude': GPS_Longitude,
         'Time_of_Measurement': Time_of_Measurement,
         'Feature_17': feature_17,  # If any missing feature exists, add it here
-        'Feature_18': feature_18   # If any missing feature exists, add it here
+        'Feature_18': feature_18,  # If any missing feature exists, add it here
+        'Feature_19': feature_19
     }
     
     return pd.DataFrame(features, index=[0])
