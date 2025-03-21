@@ -55,7 +55,7 @@ def user_input_features():
         'Time_of_Measurement': Time_of_Measurement,
         'Feature_17': feature_17,  # If any missing feature exists, add it here
         'Feature_18': feature_18,  # If any missing feature exists, add it here
-        'Feature_19': feature_19
+        'Feature_18': feature_18
     }
     
     return pd.DataFrame(features, index=[0])
