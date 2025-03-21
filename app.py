@@ -16,7 +16,7 @@ st.title('Soil Analysis Prediction')
 st.sidebar.header('User Input Parameters')
 
 def user_input_features():
-    # Defining all 18 features, including optional ones with default values
+    # All expected 18 features, ensure correct order and include default values
     NIR_Spectroscopy_900nm = st.sidebar.number_input('NIR_Spectroscopy_900nm', value=0.0)
     NIR_Spectroscopy_2500nm = st.sidebar.number_input('NIR_Spectroscopy_2500nm', value=0.0)
     Nutrient_Nitrogen_mg_kg = st.sidebar.number_input('Nutrient_Nitrogen_mg_kg', value=0.0)
@@ -33,10 +33,9 @@ def user_input_features():
     GPS_Longitude = st.sidebar.number_input('GPS_Longitude', value=0.0)
     Time_of_Measurement = st.sidebar.number_input('Time_of_Measurement', value=0.0)
 
-    # Adding missing features if the model expects more
-    # Example: We assume that these features exist, and you need to update them based on actual feature names
-    feature_17 = 0.0  # Add any missing feature here with default values
-    feature_18 = 0.0  # Add any missing feature here with default values
+    # Placeholder for any additional missing features
+    feature_17 = 0.0  # Add missing feature (if applicable)
+    feature_18 = 0.0  # Add missing feature (if applicable)
 
     features = {
         'NIR_Spectroscopy_900nm': NIR_Spectroscopy_900nm,
@@ -54,8 +53,8 @@ def user_input_features():
         'GPS_Latitude': GPS_Latitude,
         'GPS_Longitude': GPS_Longitude,
         'Time_of_Measurement': Time_of_Measurement,
-        'Feature_17': feature_17,  # Example missing feature
-        'Feature_18': feature_18   # Example missing feature
+        'Feature_17': feature_17,  # If any missing feature exists, add it here
+        'Feature_18': feature_18   # If any missing feature exists, add it here
     }
     
     return pd.DataFrame(features, index=[0])
