@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 import joblib
 from sklearn.preprocessing import StandardScaler
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
 
 # Load models
 classification_model = joblib.load('model/final_combined_classification_model.pkl')
@@ -54,8 +57,7 @@ def user_input_features():
         'GPS_Longitude': GPS_Longitude,
         'Time_of_Measurement': Time_of_Measurement,
         'Feature_17': feature_17,  # If any missing feature exists, add it here
-        'Feature_18': feature_18,  # If any missing feature exists, add it here
-        'Feature_18': feature_18
+        'Feature_18': feature_18   # If any missing feature exists, add it here
     }
     
     return pd.DataFrame(features, index=[0])
@@ -63,9 +65,23 @@ def user_input_features():
 # User input features
 input_data = user_input_features()
 
+# ColumnTransformer with the removal of the extra column (Feature_18)
+column_transformer = ColumnTransformer(
+    transformers=[
+        ('imputer', SimpleImputer(strategy='mean'), ['NIR_Spectroscopy_900nm', 'NIR_Spectroscopy_2500nm', 'Nutrient_Nitrogen_mg_kg', 
+                                                     'Nutrient_Phosphorus_mg_kg', 'Nutrient_Potassium_mg_kg', 'pH_Level', 
+                                                     'Visible_Light_400nm', 'Visible_Light_700nm', 'Temperature_C', 
+                                                     'Moisture_Content_%', 'Electrical_Conductivity_dS_m', 'Organic_Matter_%', 
+                                                     'GPS_Latitude', 'GPS_Longitude', 'Time_of_Measurement', 'Feature_17']),
+        # Remove Feature_18 from processing
+    ])
+
+# Apply the transformer to the input data (now it has 17 features)
+input_data_transformed = column_transformer.fit_transform(input_data)
+
 # Preprocess input data (standard scaling or any preprocessing as needed)
 scaler = StandardScaler()
-scaled_data = scaler.fit_transform(input_data)
+scaled_data = scaler.fit_transform(input_data_transformed)
 
 # Model predictions
 classification_pred = classification_model.predict(scaled_data)
