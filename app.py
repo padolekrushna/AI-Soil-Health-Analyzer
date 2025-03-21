@@ -36,9 +36,9 @@ def user_input_features():
     GPS_Longitude = st.sidebar.number_input('GPS_Longitude', value=0.0)
     Time_of_Measurement = st.sidebar.number_input('Time_of_Measurement', value=0.0)
 
-    # Placeholder for any additional missing features
-    feature_17 = 0.0  # Add missing feature (if applicable)
-    feature_18 = 0.0  # Add missing feature (if applicable)
+    # Missing features, add with default values (16 + 2 extra features)
+    feature_17 = 0.0  # Add the missing feature (if applicable)
+    feature_18 = 0.0  # Add the missing feature (if applicable)
 
     features = {
         'NIR_Spectroscopy_900nm': NIR_Spectroscopy_900nm,
@@ -65,18 +65,17 @@ def user_input_features():
 # User input features
 input_data = user_input_features()
 
-# ColumnTransformer with the removal of the extra column (Feature_18)
+# ColumnTransformer with the inclusion of all 18 features
 column_transformer = ColumnTransformer(
     transformers=[
         ('imputer', SimpleImputer(strategy='mean'), ['NIR_Spectroscopy_900nm', 'NIR_Spectroscopy_2500nm', 'Nutrient_Nitrogen_mg_kg', 
                                                      'Nutrient_Phosphorus_mg_kg', 'Nutrient_Potassium_mg_kg', 'pH_Level', 
                                                      'Visible_Light_400nm', 'Visible_Light_700nm', 'Temperature_C', 
                                                      'Moisture_Content_%', 'Electrical_Conductivity_dS_m', 'Organic_Matter_%', 
-                                                     'GPS_Latitude', 'GPS_Longitude', 'Time_of_Measurement', 'Feature_17']),
-        # Remove Feature_18 from processing
+                                                     'GPS_Latitude', 'GPS_Longitude', 'Time_of_Measurement', 'Feature_17', 'Feature_18']),
     ])
 
-# Apply the transformer to the input data (now it has 17 features)
+# Apply the transformer to the input data (now it has 18 features)
 input_data_transformed = column_transformer.fit_transform(input_data)
 
 # Preprocess input data (standard scaling or any preprocessing as needed)
@@ -99,4 +98,3 @@ st.write(f'Organic Matter: {regression_pred[0][3]}%')
 st.write(f'Water Retention Capacity: {regression_pred[0][4]}')
 st.write(f'Lime Requirement: {regression_pred[0][5]}')
 st.write(f'Soil Erosion Risk: {regression_pred[0][6]}')
-
