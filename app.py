@@ -19,7 +19,7 @@ st.title('Soil Analysis Prediction')
 st.sidebar.header('User Input Parameters')
 
 def user_input_features():
-    # All expected 18 features, ensure correct order and include default values
+    # Defining the expected 17 features (excluding the unwanted feature)
     NIR_Spectroscopy_900nm = st.sidebar.number_input('NIR_Spectroscopy_900nm', value=0.0)
     NIR_Spectroscopy_2500nm = st.sidebar.number_input('NIR_Spectroscopy_2500nm', value=0.0)
     Nutrient_Nitrogen_mg_kg = st.sidebar.number_input('Nutrient_Nitrogen_mg_kg', value=0.0)
@@ -36,10 +36,6 @@ def user_input_features():
     GPS_Longitude = st.sidebar.number_input('GPS_Longitude', value=0.0)
     Time_of_Measurement = st.sidebar.number_input('Time_of_Measurement', value=0.0)
 
-    # Missing features, add with default values (16 + 2 extra features)
-    feature_17 = 0.0  # Add the missing feature (if applicable)
-    feature_18 = 0.0  # Add the missing feature (if applicable)
-
     features = {
         'NIR_Spectroscopy_900nm': NIR_Spectroscopy_900nm,
         'NIR_Spectroscopy_2500nm': NIR_Spectroscopy_2500nm,
@@ -55,13 +51,11 @@ def user_input_features():
         'Organic_Matter_%': Organic_Matter_,
         'GPS_Latitude': GPS_Latitude,
         'GPS_Longitude': GPS_Longitude,
-        'Time_of_Measurement': Time_of_Measurement,
-        'Feature_17': feature_17,  # If any missing feature exists, add it here
-        'Feature_18': feature_18   # If any missing feature exists, add it here
+        'Time_of_Measurement': Time_of_Measurement
+        # Remove the column that is causing the issue here (e.g., Feature_18)
     }
     
     return pd.DataFrame(features, index=[0])
-
 # User input features
 input_data = user_input_features()
 
