@@ -16,21 +16,27 @@ st.title('Soil Analysis Prediction')
 st.sidebar.header('User Input Parameters')
 
 def user_input_features():
-    NIR_Spectroscopy_900nm = st.sidebar.number_input('NIR_Spectroscopy_900nm')
-    NIR_Spectroscopy_2500nm = st.sidebar.number_input('NIR_Spectroscopy_2500nm')
-    Nutrient_Nitrogen_mg_kg = st.sidebar.number_input('Nutrient_Nitrogen_mg_kg')
-    Nutrient_Phosphorus_mg_kg = st.sidebar.number_input('Nutrient_Phosphorus_mg_kg')
-    Nutrient_Potassium_mg_kg = st.sidebar.number_input('Nutrient_Potassium_mg_kg')
-    pH_Level = st.sidebar.number_input('pH_Level')
-    Visible_Light_400nm = st.sidebar.number_input('Visible_Light_400nm')
-    Visible_Light_700nm = st.sidebar.number_input('Visible_Light_700nm')
-    Temperature_C = st.sidebar.number_input('Temperature_C')
-    Moisture_Content_ = st.sidebar.number_input('Moisture_Content_%')
-    Electrical_Conductivity_dS_m = st.sidebar.number_input('Electrical_Conductivity_dS_m')
-    Organic_Matter_ = st.sidebar.number_input('Organic_Matter_%')
-    GPS_Latitude = st.sidebar.number_input('GPS_Latitude')
-    GPS_Longitude = st.sidebar.number_input('GPS_Longitude')
-    Time_of_Measurement = st.sidebar.number_input('Time_of_Measurement')
+    # Defining all 18 features, including optional ones with default values
+    NIR_Spectroscopy_900nm = st.sidebar.number_input('NIR_Spectroscopy_900nm', value=0.0)
+    NIR_Spectroscopy_2500nm = st.sidebar.number_input('NIR_Spectroscopy_2500nm', value=0.0)
+    Nutrient_Nitrogen_mg_kg = st.sidebar.number_input('Nutrient_Nitrogen_mg_kg', value=0.0)
+    Nutrient_Phosphorus_mg_kg = st.sidebar.number_input('Nutrient_Phosphorus_mg_kg', value=0.0)
+    Nutrient_Potassium_mg_kg = st.sidebar.number_input('Nutrient_Potassium_mg_kg', value=0.0)
+    pH_Level = st.sidebar.number_input('pH_Level', value=7.0)
+    Visible_Light_400nm = st.sidebar.number_input('Visible_Light_400nm', value=0.0)
+    Visible_Light_700nm = st.sidebar.number_input('Visible_Light_700nm', value=0.0)
+    Temperature_C = st.sidebar.number_input('Temperature_C', value=25.0)
+    Moisture_Content_ = st.sidebar.number_input('Moisture_Content_%', value=0.0)
+    Electrical_Conductivity_dS_m = st.sidebar.number_input('Electrical_Conductivity_dS_m', value=0.0)
+    Organic_Matter_ = st.sidebar.number_input('Organic_Matter_%', value=0.0)
+    GPS_Latitude = st.sidebar.number_input('GPS_Latitude', value=0.0)
+    GPS_Longitude = st.sidebar.number_input('GPS_Longitude', value=0.0)
+    Time_of_Measurement = st.sidebar.number_input('Time_of_Measurement', value=0.0)
+
+    # Adding missing features if the model expects more
+    # Example: We assume that these features exist, and you need to update them based on actual feature names
+    feature_17 = 0.0  # Add any missing feature here with default values
+    feature_18 = 0.0  # Add any missing feature here with default values
 
     features = {
         'NIR_Spectroscopy_900nm': NIR_Spectroscopy_900nm,
@@ -47,7 +53,9 @@ def user_input_features():
         'Organic_Matter_%': Organic_Matter_,
         'GPS_Latitude': GPS_Latitude,
         'GPS_Longitude': GPS_Longitude,
-        'Time_of_Measurement': Time_of_Measurement
+        'Time_of_Measurement': Time_of_Measurement,
+        'Feature_17': feature_17,  # Example missing feature
+        'Feature_18': feature_18   # Example missing feature
     }
     
     return pd.DataFrame(features, index=[0])
@@ -75,3 +83,4 @@ st.write(f'Organic Matter: {regression_pred[0][3]}%')
 st.write(f'Water Retention Capacity: {regression_pred[0][4]}')
 st.write(f'Lime Requirement: {regression_pred[0][5]}')
 st.write(f'Soil Erosion Risk: {regression_pred[0][6]}')
+
